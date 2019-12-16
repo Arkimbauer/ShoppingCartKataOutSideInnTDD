@@ -4,14 +4,16 @@ namespace ShoppingCartKata.Tests
 {
     public class BasketRepositoryShould
     {
+        private readonly ShoppingBasketShould _shoppingBasketShould = new ShoppingBasketShould();
+
         [Fact]
         public void SaveOneShoppingBasket()
         {
             var shoppingBasketRepository = new ShoppingBasketRepository();
 
-            string userId = "1";
-            string productId = "10002";
-            int quantity = 2;
+            const string userId = "1";
+            const string productId = "10002";
+            const int quantity = 2;
             var item = new Item(productId, quantity);
 
             var shoppingBasket = new ShoppingBasket(userId, item);
@@ -23,4 +25,4 @@ namespace ShoppingCartKata.Tests
             Assert.Equal(expectedShoppingBasket, shoppingBasket);
         }
     }
-}
+}   

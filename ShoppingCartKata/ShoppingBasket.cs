@@ -10,7 +10,23 @@ namespace ShoppingCartKata
         public ShoppingBasket(string userId, Item item)
         {
             _userId = userId;
-            _items.Add(item);
+            CheckRepeatProducts(item);
+        }
+
+        private void CheckRepeatProducts(Item newItem)
+        {
+            foreach (var item in _items)
+            {
+                SumQuantityToRepeatProducts(newItem, item);
+            }
+        }
+
+        private static void SumQuantityToRepeatProducts(Item newItem, Item item)
+        {
+            if (item.GetProduct() == newItem.GetProduct())
+            {
+                item.AddQuantity(newItem.GetQuantity());
+            }
         }
 
         public string GetUserId()

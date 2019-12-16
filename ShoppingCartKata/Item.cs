@@ -3,12 +3,27 @@ namespace ShoppingCartKata
     public class Item
     {
         private readonly string _productId;
-        private readonly int _quantity;
+        private int _quantity;
 
         public Item(string productId, int quantity)
         {
             _productId = productId;
             _quantity = quantity;
+        }
+
+        public string GetProduct()
+        {
+            return _productId;
+        }
+
+        public int GetQuantity()
+        {
+            return _quantity;
+        }
+
+        public void AddQuantity(int getQuantity)
+        {
+            _quantity += getQuantity;
         }
 
         protected bool Equals(Item other)
