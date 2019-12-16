@@ -16,7 +16,8 @@ namespace ShoppingCartKata.Tests
             const int quantity = 2;
             var item = new Item(productId, quantity);
 
-            var shoppingBasket = new ShoppingBasket(userId, item);
+            var shoppingBasket = new ShoppingBasket(userId);
+            shoppingBasket.AddItem(item);
 
             shoppingBasketService.AddItem(userId, productId, 2);
 

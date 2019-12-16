@@ -15,7 +15,8 @@ namespace ShoppingCartKata
         public void AddItem(string userId, string productId, int quantity)
         {
             var item = new Item(productId, quantity);
-            var shoppingBasket = new ShoppingBasket(userId, item);
+            var shoppingBasket = new ShoppingBasket(userId);
+            shoppingBasket.AddItem(item);
             _shoppingBasketRepository.Save(shoppingBasket);
         }   
 

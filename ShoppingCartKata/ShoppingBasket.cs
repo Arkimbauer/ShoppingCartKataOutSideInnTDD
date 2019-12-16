@@ -7,9 +7,13 @@ namespace ShoppingCartKata
         private readonly string _userId;
         private readonly List<Item> _items = new List<Item>();
 
-        public ShoppingBasket(string userId, Item item)
+        public ShoppingBasket(string userId)
         {
             _userId = userId;
+        }
+
+        public void AddItem(Item item)  
+        {
             CheckRepeatProducts(item);
         }
 
@@ -17,16 +21,13 @@ namespace ShoppingCartKata
         {
             foreach (var item in _items)
             {
-                SumQuantityToRepeatProducts(newItem, item);
+                if (item.GetProduct() == newItem.GetProduct())
+                {
+                    item.AddQuantity(newItem.GetQuantity());
+                    return;
+                }
             }
-        }
-
-        private static void SumQuantityToRepeatProducts(Item newItem, Item item)
-        {
-            if (item.GetProduct() == newItem.GetProduct())
-            {
-                item.AddQuantity(newItem.GetQuantity());
-            }
+            _items.Add(newItem);
         }
 
         public string GetUserId()
