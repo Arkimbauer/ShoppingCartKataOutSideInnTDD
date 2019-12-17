@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -5,6 +6,8 @@ namespace ShoppingCartKata.Tests
 {
     public class ShoppingBasketShould
     {
+        private DateTime _date = new DateTime(2019, 03, 12);
+
         [Fact]
         public void AddQuantityToShoppingBasketIfItemAlreadyExists()
         {
@@ -15,7 +18,7 @@ namespace ShoppingCartKata.Tests
             const int quantity = 1;
             var item = new Item(productId, quantity);
 
-            var newShoppingBasket = new Basket(userId);
+            var newShoppingBasket = new Basket(userId, _date);
             newShoppingBasket.AddItem(item);
             newShoppingBasket.AddItem(item);
 
@@ -24,7 +27,7 @@ namespace ShoppingCartKata.Tests
             var shoppingBasket = shoppingBasketRepository.GetShoppingBasket(userId);
 
             var expectedItem = new Item(productId, 2);
-            var expectedShoppingBasket = new Basket(userId);
+            var expectedShoppingBasket = new Basket(userId, _date);
             expectedShoppingBasket.AddItem(expectedItem);
 
             Assert.Equal(expectedShoppingBasket, shoppingBasket);
@@ -42,7 +45,7 @@ namespace ShoppingCartKata.Tests
             var itemTheHobbit = new Item(productIdTheHobbit, 1);
             var itemBreakingBad = new Item(productIdBreakingBad, 1);
 
-            var newShoppingBasket = new Basket(userId);
+            var newShoppingBasket = new Basket(userId, _date);
             newShoppingBasket.AddItem(itemTheHobbit);   
             newShoppingBasket.AddItem(new Item(productIdTheHobbit, 1));
             newShoppingBasket.AddItem(itemBreakingBad);
@@ -57,7 +60,7 @@ namespace ShoppingCartKata.Tests
             var shoppingBasket = shoppingBasketRepository.GetShoppingBasket(userId);
 
             var expectedItem = new Item(productIdBreakingBad, 5);
-            var expectedShoppingBasket = new Basket(userId);
+            var expectedShoppingBasket = new Basket(userId, _date);
             expectedShoppingBasket.AddItem(expectedItem);
             expectedShoppingBasket.AddItem(itemTheHobbit);
             expectedShoppingBasket.AddItem(itemTheHobbit);
@@ -68,7 +71,7 @@ namespace ShoppingCartKata.Tests
         [Fact]
         public void ReturnShoppingBasketToTextFormat()
         {
-            var shoppingBasket = new Basket(userId:"1");
+            var shoppingBasket = new Basket(userId:"1", date:_date);
             shoppingBasket.AddItem(new Item("10002", 1));
 
             var textFormat = shoppingBasket.TextFormat();

@@ -1,3 +1,5 @@
+using System;
+using NSubstitute;
 using Xunit;
 
 namespace ShoppingCartKata.Tests
@@ -14,8 +16,11 @@ namespace ShoppingCartKata.Tests
                                             "- Total: £45.00";
 
             var shoppingBasketRepository = new BasketRepository();
-
             var shoppingBasketService = new ShoppingBasketService(shoppingBasketRepository);
+
+            var timeService = Substitute.For<ITime>();
+            timeService.GetTime().Returns(new DateTime(2019, 03, 12));
+
             const string breakingBadProductId = "20110";
             const string hobbitProductId = "10002";
 

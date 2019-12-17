@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace ShoppingCartKata.Tests
@@ -5,6 +6,7 @@ namespace ShoppingCartKata.Tests
     public class BasketRepositoryShould
     {
         private readonly ShoppingBasketShould _shoppingBasketShould = new ShoppingBasketShould();
+        private DateTime _date = new DateTime(2019,03,12);
 
         [Fact]
         public void SaveOneShoppingBasket()
@@ -16,7 +18,7 @@ namespace ShoppingCartKata.Tests
             const int quantity = 2;
             var item = new Item(productId, quantity);
 
-            var shoppingBasket = new Basket(userId);
+            var shoppingBasket = new Basket(userId, _date);
             shoppingBasket.AddItem(item);
 
             shoppingBasketRepository.Save(shoppingBasket, userId);

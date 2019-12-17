@@ -8,10 +8,12 @@ namespace ShoppingCartKata
     {
         private readonly string _userId;
         private readonly List<Item> _items = new List<Item>();
+        private readonly DateTime _date = new DateTime(2019,03,12);
 
-        public Basket(string userId)
-        {   
+        public Basket(string userId, DateTime date)
+        {
             _userId = userId;
+            _date = date;
         }
 
         public void AddItem(Item item)  
@@ -36,7 +38,7 @@ namespace ShoppingCartKata
                 totalPrice += item.CalculateTotalPrice();
             }
 
-            return $" - 12/03/2019 " +
+            return $" - {_date:dd/MM/yyyy} " +
                    stringItems +
                    $"\n- Total: £{totalPrice}";
         }

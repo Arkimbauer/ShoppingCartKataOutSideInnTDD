@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ShoppingCartKata.Tests;
 
@@ -23,8 +24,9 @@ namespace ShoppingCartKata
 
             if (!_basketRepository.ExistentUserIdShoppingBasket(userId))
             {
+                var date = new DateTime(2019, 03, 12);
                 var item = new Item(productId, quantity);
-                var shoppingBasket = new Basket(userId);
+                var shoppingBasket = new Basket(userId, date);
                 shoppingBasket.AddItem(item);
                 _basketRepository.Save(shoppingBasket, userId);
             }
