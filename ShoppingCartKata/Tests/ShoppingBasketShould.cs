@@ -19,7 +19,7 @@ namespace ShoppingCartKata.Tests
             newShoppingBasket.AddItem(item);
             newShoppingBasket.AddItem(item);
 
-            shoppingBasketRepository.Save(newShoppingBasket);
+            shoppingBasketRepository.Save(newShoppingBasket, userId);
 
             var shoppingBasket = shoppingBasketRepository.GetShoppingBasket(userId);
 
@@ -52,7 +52,7 @@ namespace ShoppingCartKata.Tests
             newShoppingBasket.AddItem(new Item(productIdBreakingBad, 1));
            
 
-            shoppingBasketRepository.Save(newShoppingBasket);
+            shoppingBasketRepository.Save(newShoppingBasket, userId);
 
             var shoppingBasket = shoppingBasketRepository.GetShoppingBasket(userId);
 

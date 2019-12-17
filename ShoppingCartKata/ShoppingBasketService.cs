@@ -14,15 +14,25 @@ namespace ShoppingCartKata
 
         public void AddItem(string userId, string productId, int quantity)
         {
-            var item = new Item(productId, quantity);
-            var shoppingBasket = new ShoppingBasket(userId);
-            shoppingBasket.AddItem(item);
-            _shoppingBasketRepository.Save(shoppingBasket);
+            if (_shoppingBasketRepository.ExistentUserIdShoppingBasket(userId))
+            {
+                var shoppingBasket = _shoppingBasketRepository.GetShoppingBasket(userId);
+                shoppingBasket.AddItem(new Item(productId, quantity));
+                _shoppingBasketRepository.Update(shoppingBasket, userId);
+            }
+
+            if (!_shoppingBasketRepository.ExistentUserIdShoppingBasket(userId))
+            {
+                var item = new Item(productId, quantity);
+                var shoppingBasket = new ShoppingBasket(userId);
+                shoppingBasket.AddItem(item);
+                _shoppingBasketRepository.Save(shoppingBasket, userId);
+            }
         }   
 
-        public string BasketFor(string userId)
+        public ShoppingBasket BasketFor(string userId)
         {
-            throw new System.NotImplementedException();
+            return _shoppingBasketRepository.GetShoppingBasket(userId);
         }
     }
 }   

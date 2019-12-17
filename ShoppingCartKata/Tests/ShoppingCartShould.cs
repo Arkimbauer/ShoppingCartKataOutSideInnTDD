@@ -27,7 +27,7 @@ namespace ShoppingCartKata.Tests
             var userCart = shoppingBasketService.BasketFor(userId);
                 
             //Assert
-            Assert.Equal(expectedUserCart, userCart);
+            Assert.Equal(expectedUserCart, userCart.ToString());
         }
     }
 }   

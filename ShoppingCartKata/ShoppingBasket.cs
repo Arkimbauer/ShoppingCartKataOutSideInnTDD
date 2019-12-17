@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ShoppingCartKata
 {
@@ -30,29 +31,21 @@ namespace ShoppingCartKata
             _items.Add(newItem);
         }
 
-        public string GetUserId()
+        public bool SameUserId(string userId)
         {
-            return _userId;
+            return userId == _userId;
         }
-
+            
         protected bool Equals(ShoppingBasket other)
         {
-            if (this._items.Count != other._items.Count)
-                return false;
-
-            foreach (var item in _items)
-            {
-                if (!other._items.Contains(item)) return false;
-            }
-            return true;
+            return this._items.Count == other._items.Count && _items.All(item => other._items.Contains(item));
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((ShoppingBasket) obj);
+            return obj.GetType() == this.GetType() && Equals((ShoppingBasket) obj);
         }
 
         public override int GetHashCode()

@@ -19,7 +19,7 @@ namespace ShoppingCartKata.Tests
             var shoppingBasket = new ShoppingBasket(userId);
             shoppingBasket.AddItem(item);
 
-            shoppingBasketRepository.Save(shoppingBasket);
+            shoppingBasketRepository.Save(shoppingBasket, userId);
 
             var expectedShoppingBasket = shoppingBasketRepository.GetShoppingBasket(userId);
 

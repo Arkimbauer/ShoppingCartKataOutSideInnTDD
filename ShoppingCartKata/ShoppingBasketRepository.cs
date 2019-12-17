@@ -6,20 +6,31 @@ namespace ShoppingCartKata
 {
     public class ShoppingBasketRepository : IShoppingBasketRepository
     {
-        private readonly List<ShoppingBasket> _shoppingBaskets;
+        private readonly Dictionary<string, ShoppingBasket> _shoppingBasketsDictionary;
 
         public ShoppingBasketRepository()
         {
-            _shoppingBaskets = new List<ShoppingBasket>();
+            _shoppingBasketsDictionary = new Dictionary<string, ShoppingBasket>();
         }
-        public void Save(ShoppingBasket shoppingBasket)
+        public void Save(ShoppingBasket shoppingBasket, string userId)
         {
-            _shoppingBaskets.Add(shoppingBasket);
+            _shoppingBasketsDictionary.Add(userId, shoppingBasket);
         }   
+
+        public void Update(ShoppingBasket shoppingBasket, string userId)
+        {
+            _shoppingBasketsDictionary.Remove(userId);
+            _shoppingBasketsDictionary.Add(userId, shoppingBasket);
+        }
+
+        public bool ExistentUserIdShoppingBasket(string userId)
+        {
+            return _shoppingBasketsDictionary.ContainsKey(userId);
+        }
 
         public ShoppingBasket GetShoppingBasket(string userId)
         {
-            return _shoppingBaskets.FirstOrDefault(shoppingBasket => shoppingBasket.GetUserId() == userId);
+            return _shoppingBasketsDictionary[userId];
         }
     }
 }   
