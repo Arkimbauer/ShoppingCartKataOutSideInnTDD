@@ -13,7 +13,7 @@ namespace ShoppingCartKata.Tests
                                             "- 5 x Breaking Bad // 5 x 7.00 = £35.00" +
                                             "- Total: £45.00";
 
-            var shoppingBasketRepository = new ShoppingBasketRepository();
+            var shoppingBasketRepository = new BasketRepository();
 
             var shoppingBasketService = new ShoppingBasketService(shoppingBasketRepository);
             const string breakingBadProductId = "20110";
@@ -27,7 +27,7 @@ namespace ShoppingCartKata.Tests
             var userCart = shoppingBasketService.BasketFor(userId);
                 
             //Assert
-            Assert.Equal(expectedUserCart, userCart.ToString());
+            Assert.Equal(expectedUserCart, userCart);
         }
     }
 }   

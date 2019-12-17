@@ -5,34 +5,35 @@ namespace ShoppingCartKata
 {
     public class ShoppingBasketService
     {
-        private readonly IShoppingBasketRepository _shoppingBasketRepository;
+        private readonly IBasketRepository _basketRepository;
 
-        public ShoppingBasketService(IShoppingBasketRepository shoppingBasketRepository)
+        public ShoppingBasketService(IBasketRepository basketRepository)
         {
-            _shoppingBasketRepository = shoppingBasketRepository;
+            _basketRepository = basketRepository;
         }
 
         public void AddItem(string userId, string productId, int quantity)
         {
-            if (_shoppingBasketRepository.ExistentUserIdShoppingBasket(userId))
+            if (_basketRepository.ExistentUserIdShoppingBasket(userId))
             {
-                var shoppingBasket = _shoppingBasketRepository.GetShoppingBasket(userId);
+                var shoppingBasket = _basketRepository.GetShoppingBasket(userId);
                 shoppingBasket.AddItem(new Item(productId, quantity));
-                _shoppingBasketRepository.Update(shoppingBasket, userId);
+                _basketRepository.Update(shoppingBasket, userId);
             }
 
-            if (!_shoppingBasketRepository.ExistentUserIdShoppingBasket(userId))
+            if (!_basketRepository.ExistentUserIdShoppingBasket(userId))
             {
                 var item = new Item(productId, quantity);
-                var shoppingBasket = new ShoppingBasket(userId);
+                var shoppingBasket = new Basket(userId);
                 shoppingBasket.AddItem(item);
-                _shoppingBasketRepository.Save(shoppingBasket, userId);
+                _basketRepository.Save(shoppingBasket, userId);
             }
-        }   
+        }       
 
-        public ShoppingBasket BasketFor(string userId)
+        public string BasketFor(string userId)
         {
-            return _shoppingBasketRepository.GetShoppingBasket(userId);
+            var shoppingBasket = _basketRepository.GetShoppingBasket(userId);
+            return shoppingBasket.TextFormat();
         }
     }
 }   

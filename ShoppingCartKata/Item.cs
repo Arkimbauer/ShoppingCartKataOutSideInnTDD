@@ -1,29 +1,44 @@
+using System.Collections.Specialized;
+
 namespace ShoppingCartKata
 {
     public class Item
     {
         private readonly string _productId;
         private int _quantity;
+        private readonly ProductsCatalog _productsCatalog = new ProductsCatalog();
+        private readonly double _price;
+        private readonly double _totalPrice;
 
         public Item(string productId, int quantity)
         {
             _productId = productId;
             _quantity = quantity;
+            var product =_productsCatalog.GetProduct(productId);
+            _price = product.Price;
+            _totalPrice = _price * _quantity;
         }
 
-        public string GetProduct()
+        public double CalculateTotalPrice()
         {
-            return _productId;
+            return _price * _quantity;
         }
 
-        public int GetQuantity()
+        public string TextFormat()
         {
-            return _quantity;
+            var product = _productsCatalog.GetProduct(_productId);
+
+            return $"\n- {_quantity.ToString()} x {product.NameTextFormat()} //{_quantity.ToString()} x {_price} = £{_totalPrice}";
         }
 
-        public void AddQuantity(int getQuantity)
+        public bool SameProduct(Item item)
         {
-            _quantity += getQuantity;
+            return _productId == item._productId;
+        }
+
+        public void AddQuantity(Item item)
+        {
+            _quantity += item._quantity;
         }
 
         protected bool Equals(Item other)
@@ -47,4 +62,4 @@ namespace ShoppingCartKata
             }
         }
     }
-}
+}   

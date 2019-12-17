@@ -1,35 +1,47 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingCartKata
 {
-    public class ShoppingBasket
+    public class Basket
     {
         private readonly string _userId;
         private readonly List<Item> _items = new List<Item>();
 
-        public ShoppingBasket(string userId)
-        {
+        public Basket(string userId)
+        {   
             _userId = userId;
         }
 
         public void AddItem(Item item)  
         {
-            CheckRepeatProducts(item);
-        }
-
-        private void CheckRepeatProducts(Item newItem)
-        {
-            foreach (var item in _items.Where(item => item.GetProduct() == newItem.GetProduct()))
+            foreach (var existingItem in _items.Where(item2 => item2.SameProduct(item)))
             {
-                item.AddQuantity(newItem.GetQuantity());
+                existingItem.AddQuantity(item);
                 return;
             }
 
-            _items.Add(newItem);
+            _items.Add(item);
         }
 
-        protected bool Equals(ShoppingBasket other)
+        public string TextFormat()
+        {
+            var stringItems = string.Empty;
+            double totalPrice = 0;
+
+            foreach (var item in _items)
+            {
+                stringItems += item.TextFormat();
+                totalPrice += item.CalculateTotalPrice();
+            }
+
+            return $" - 12/03/2019 " +
+                   stringItems +
+                   $"\n- Total: £{totalPrice}";
+        }
+
+        protected bool Equals(Basket other)
         {
             return this._items.Count == other._items.Count && _items.All(item => other._items.Contains(item));
         }
@@ -38,7 +50,7 @@ namespace ShoppingCartKata
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == this.GetType() && Equals((ShoppingBasket) obj);
+            return obj.GetType() == this.GetType() && Equals((Basket) obj);
         }
 
         public override int GetHashCode()
