@@ -20,22 +20,15 @@ namespace ShoppingCartKata
 
         private void CheckRepeatProducts(Item newItem)
         {
-            foreach (var item in _items)
+            foreach (var item in _items.Where(item => item.GetProduct() == newItem.GetProduct()))
             {
-                if (item.GetProduct() == newItem.GetProduct())
-                {
-                    item.AddQuantity(newItem.GetQuantity());
-                    return;
-                }
+                item.AddQuantity(newItem.GetQuantity());
+                return;
             }
+
             _items.Add(newItem);
         }
 
-        public bool SameUserId(string userId)
-        {
-            return userId == _userId;
-        }
-            
         protected bool Equals(ShoppingBasket other)
         {
             return this._items.Count == other._items.Count && _items.All(item => other._items.Contains(item));
